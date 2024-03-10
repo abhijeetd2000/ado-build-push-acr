@@ -1,0 +1,34 @@
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build image and Push Docker Image
+  jobs:
+  - job: Build
+    displayName: Build and Push Docker Image
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+        - task: Docker@2
+          inputs:
+           containerRegistry: dockerhub_sc
+           repository: abhijeetdops/app1
+           command: 'buildAndPush'
+           Dockerfile: '$(Build.SourcesDirectory)/Dockerfile' 
+           tags: 'latest' 
+  
+
+
+
+
+    
+
+    
